@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+{% endblock %}
+
+{% block title %} Home Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header active"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="hero-section">
+    </div>
+    <div>
+        <h2>Popular Courses</h2>
+        <div class="line"></div>
+    </div>
+    <div class="courses">
+        {% for course in courses %}
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{ course.thumbnail }}" alt="{{course.course_name}}">
+                </div>
+                <div class="card-btn">
+                    <p> {{course.course_name}} </p>
+                    <button>Continue</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

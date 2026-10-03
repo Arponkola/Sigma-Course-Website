@@ -1,0 +1,557 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+
+{% block middle %}
+
+<ul>
+
+    <li class="nav-header">
+        <a href="{{ url_for('home.index') }}">
+            Home
+        </a>
+    </li>
+
+    {% if is_admin %}
+
+    <li class="nav-header active">
+        <a href="{{ url_for('admin.admin_page') }}">
+            Admin
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.course_page') }}">
+            Courses
+        </a>
+    </li>
+
+    {% if user %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.own_page') }}">
+            My Courses
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('about.about_page') }}">
+            About Us
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="admin-container">
+
+    <!-- ========================= -->
+    <!-- WELCOME -->
+    <!-- ========================= -->
+
+    <section class="admin-welcome">
+
+        <div class="welcome-text">
+
+            <span class="admin-label">
+                ADMIN PANEL
+            </span>
+
+            <h1>
+                Welcome to Admin Dashboard
+            </h1>
+
+            <p>
+                Manage your learning platform from one place.
+            </p>
+
+        </div>
+
+        <div class="welcome-info">
+
+            <div class="admin-user">
+
+                <span>
+                    Logged in as
+                </span>
+
+                <strong>
+                    Administrator
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- DATABASE OVERVIEW -->
+    <!-- ========================= -->
+
+    <section class="admin-section">
+
+        <div class="section-title">
+
+            <h2>
+                Database Overview
+            </h2>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="database-grid">
+
+
+            <div class="database-card">
+
+                <div class="database-icon">
+                    U
+                </div>
+
+                <div class="database-content">
+
+                    <span>
+                        USERS
+                    </span>
+
+                    <strong>
+                        {{ user_count }}
+                    </strong>
+
+                    <p>
+                        Registered users and administrators.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin.users') }}"
+                        class="admin-action"
+                    >
+                        Manage Users →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="database-card">
+
+                <div class="database-icon">
+                    C
+                </div>
+
+                <div class="database-content">
+
+                    <span>
+                        COURSES
+                    </span>
+
+                    <strong>
+                        {{ course_count }}
+                    </strong>
+
+                    <p>
+                        Courses available on the platform.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin.courses') }}"
+                        class="admin-action"
+                    >
+                        Manage Courses →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="database-card">
+
+                <div class="database-icon">
+                    E
+                </div>
+
+                <div class="database-content">
+
+                    <span>
+                        ENROLLMENTS
+                    </span>
+
+                    <strong>
+                        {{ enrollment_count }}
+                    </strong>
+
+                    <p>
+                        User course enrollment records.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin.enrollments') }}"
+                        class="admin-action"
+                    >
+                        Manage Enrollments →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="database-card">
+
+                <div class="database-icon">
+                    V
+                </div>
+
+                <div class="database-content">
+
+                    <span>
+                        VIDEOS
+                    </span>
+
+                    <strong>
+                        {{ video_count }}
+                    </strong>
+
+                    <p>
+                        Educational video content.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin.videos') }}"
+                        class="admin-action"
+                    >
+                        Manage Videos →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="database-card">
+
+                <div class="database-icon">
+                    M
+                </div>
+
+                <div class="database-content">
+
+                    <span>
+                        CONTACTS
+                    </span>
+
+                    <strong>
+                        {{ contact_count }}
+                    </strong>
+
+                    <p>
+                        Messages submitted by users.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin.contacts') }}"
+                        class="admin-action"
+                    >
+                        View Messages →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- ADMINISTRATION -->
+    <!-- ========================= -->
+
+    <section class="admin-section">
+
+        <div class="section-title">
+
+            <h2>
+                Administration
+            </h2>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="operation-grid">
+
+
+            <div class="operation-card">
+
+                <div class="operation-number">
+                    01
+                </div>
+
+                <h3>
+                    User Management
+                </h3>
+
+                <p>
+                    Create, edit, delete users and manage
+                    administrator privileges.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.users') }}"
+                    class="admin-action"
+                >
+                    Open Users →
+                </a>
+
+            </div>
+
+
+            <div class="operation-card">
+
+                <div class="operation-number">
+                    02
+                </div>
+
+                <h3>
+                    Course Management
+                </h3>
+
+                <p>
+                    Create, edit and remove courses.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.courses') }}"
+                    class="admin-action"
+                >
+                    Open Courses →
+                </a>
+
+            </div>
+
+
+            <div class="operation-card">
+
+                <div class="operation-number">
+                    03
+                </div>
+
+                <h3>
+                    Enrollment Management
+                </h3>
+
+                <p>
+                    Manage user enrollment and access status.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.enrollments') }}"
+                    class="admin-action"
+                >
+                    Open Enrollments →
+                </a>
+
+            </div>
+
+
+            <div class="operation-card">
+
+                <div class="operation-number">
+                    04
+                </div>
+
+                <h3>
+                    Video Management
+                </h3>
+
+                <p>
+                    Add, edit and delete course videos.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.videos') }}"
+                    class="admin-action"
+                >
+                    Open Videos →
+                </a>
+
+            </div>
+
+
+            <div class="operation-card">
+
+                <div class="operation-number">
+                    05
+                </div>
+
+                <h3>
+                    Contact Messages
+                </h3>
+
+                <p>
+                    Read and remove messages submitted
+                    by users.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.contacts') }}"
+                    class="admin-action"
+                >
+                    Open Contacts →
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- RELATIONSHIPS -->
+    <!-- ========================= -->
+
+    <section class="admin-section">
+
+        <div class="section-title">
+
+            <h2>
+                Database Relationships
+            </h2>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="relationship-box">
+
+
+            <div class="relationship-item">
+
+                <div class="relationship-table">
+                    User
+                </div>
+
+                <div class="relationship-arrow">
+                    →
+                </div>
+
+                <div class="relationship-table">
+                    Course
+                </div>
+
+                <p>
+                    Users can create courses.
+                </p>
+
+            </div>
+
+
+            <div class="relationship-item">
+
+                <div class="relationship-table">
+                    User
+                </div>
+
+                <div class="relationship-arrow">
+                    →
+                </div>
+
+                <div class="relationship-table">
+                    Enrollment
+                </div>
+
+                <p>
+                    Users can enroll in courses.
+                </p>
+
+            </div>
+
+
+            <div class="relationship-item">
+
+                <div class="relationship-table">
+                    Course
+                </div>
+
+                <div class="relationship-arrow">
+                    →
+                </div>
+
+                <div class="relationship-table">
+                    Video
+                </div>
+
+                <p>
+                    Courses contain videos.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- STATUS -->
+    <!-- ========================= -->
+
+    <section class="admin-status">
+
+        <div>
+
+            <span>
+                ACCOUNT STATUS
+            </span>
+
+            <h2>
+                Administrator Access
+            </h2>
+
+            <p>
+                You are viewing this page with administrator
+                privileges.
+            </p>
+
+        </div>
+
+        <div class="status-badge">
+            ADMIN
+        </div>
+
+    </section>
+
+
+</div>
+
+{% endblock %}

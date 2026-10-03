@@ -1,0 +1,225 @@
+#container {
+    width: 90%;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.search-container input, button {
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(58, 57, 57, 0.25);
+    outline: none;
+}
+
+.search-container input {
+    width: 300px;
+    text-indent: 10px;
+}
+
+.search-container input:focus {
+    outline: 1px solid rgba(58, 57, 57, 0.65);
+}
+
+.search-container button {
+    background-color: rgb(107, 86, 202);
+    cursor: pointer;
+    color: #eee;
+}
+
+.search-container button:hover {
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0,  0.15);
+}
+
+.result-bottom {
+    margin-top: 10px;
+    max-height: 530px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+#price {
+    height: 4px;
+    scroll-behavior: smooth;
+}
+
+.filter-group {
+    padding: 5px;
+}
+
+#filter-by {
+    border-right: 1px solid rgba(0, 0, 0,  0.35);
+    padding: 10px;
+    overflow-y: scroll;
+    width: 320px;
+    scrollbar-width: none;
+}
+
+#result {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: scroll;
+    scrollbar-width: auto;
+    scrollbar-color: #534080 #ffffff;
+    scroll-behavior: smooth;
+}
+
+#result .result-container {
+    width: 100%;
+    height: 180px;
+    background-color: rgba(141, 137, 137, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transform: scale(100%, 100%);
+    transition: transform 0.1s linear;
+    gap: 10px;
+}
+
+#result .result-container:hover {
+    transform: scale(105%, 105%);
+}
+
+.result-container-image {
+    width: 90%;
+    height: 70%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+
+.result-info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.result-info button {
+    background-color: rgb(65, 63, 63);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s linear;
+}
+
+input[type="checkbox"] {
+    accent-color: rgb(107, 86, 202);
+}
+
+.result-info button:hover {
+    background-color: black;
+}
+
+#modal-form {
+    position: absolute;
+    left: 50%;
+    max-width: 400px;
+    width: 80%;
+    height: 60dvh;
+    max-height: 250px;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.90);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 0.2s linear, opacity 0.2s linear;
+    gap: 10px;
+    backdrop-filter: blur(15px);
+}
+
+.modal-form-group {
+    padding-top: 10px;
+}
+
+#close-btn  {
+    position: absolute;
+    right: 0;
+    top: -10px;
+    font-size: xx-large;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+#close-btn:hover {
+    color: #eee;
+}
+
+.modal-form-group input {
+    width: 300px;
+    padding: 8px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #aaa;
+    background-color:rgb(65, 63, 63);
+    color: #eee;
+}
+
+.modal-form-group input:focus {
+    outline: 1px solid #eee;
+}
+
+.modal-form-group input::placeholder {
+    color: #eee;
+}
+
+.modal-form-group-button {
+    width: 78%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.modal-form-group-button button {
+    width: 150px;
+    border-radius: 10px;
+    background-color: rgb(58, 60, 189);
+    color: white;
+    cursor: pointer;
+}
+
+.modal-form-group-button button:hover {
+    box-shadow: 1px 1px 3px 3px rgba(107, 86, 202, 0.25);
+}
+
+#loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loader {
+    border: 5px solid #aaa;
+    border-bottom: 5px solid black;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    animation: animate 1s linear infinite;
+}
+
+@keyframes animate {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}

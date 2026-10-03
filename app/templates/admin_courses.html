@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block title %}
+Manage Courses
+{% endblock %}
+
+
+{% block middle %}
+
+<ul>
+
+    <li class="nav-header">
+        <a href="{{ url_for('home.index') }}">
+            Home
+        </a>
+    </li>
+
+    {% if is_admin %}
+
+    <li class="nav-header active">
+        <a href="{{ url_for('admin.admin_page') }}">
+            Admin
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.course_page') }}">
+            Courses
+        </a>
+    </li>
+
+    {% if user %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.own_page') }}">
+            My Courses
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('about.about_page') }}">
+            About Us
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <section class="admin-section">
+
+        <div class="page-heading">
+
+            <div>
+
+                <span class="admin-label">
+                    ADMIN
+                </span>
+
+                <h1>
+                    Course Management
+                </h1>
+
+                <p>
+                    Manage all courses in the platform.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('admin.create_course') }}"
+                class="primary-button"
+            >
+                + Create Course
+            </a>
+
+        </div>
+
+
+        <div class="admin-table-wrapper">
+
+            <table class="admin-table">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Course</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                        <th>Author ID</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in courses %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.id }}
+                        </td>
+
+                        <td>
+
+                            <strong>
+                                {{ item.course_name }}
+                            </strong>
+
+                            {% if item.course_details %}
+
+                            <small>
+                                {{ item.course_details[:80] }}
+                                {% if item.course_details|length > 80 %}
+                                    ...
+                                {% endif %}
+                            </small>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ item.course_type }}
+                        </td>
+
+                        <td>
+                            {{ item.course_duration }}
+                        </td>
+
+                        <td>
+                            ₹{{ item.price or 0 }}
+                        </td>
+
+                        <td>
+                            {{ item.user_id or 'None' }}
+                        </td>
+
+                        <td>
+
+                            <div class="table-actions">
+
+                                <a
+                                    href="{{ url_for(
+                                        'admin.edit_course',
+                                        course_id=item.id
+                                    ) }}"
+                                    class="edit-button"
+                                >
+                                    Edit
+                                </a>
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.delete_course',
+                                        course_id=item.id
+                                    ) }}"
+                                    onsubmit="return confirm(
+                                        'Delete this course, its videos and enrollments?'
+                                    );"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="delete-button"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="7">
+                            No courses found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin.admin_page') }}"
+            class="back-button"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

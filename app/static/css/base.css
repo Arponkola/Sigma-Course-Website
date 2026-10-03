@@ -1,0 +1,170 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: #eee;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Header - START */
+
+.nav-bar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    color: black;
+    position: fixed;
+    padding-left: 50px;
+    padding-right: 50px;
+    z-index: 100;
+}
+
+.nav-bar #middle ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-bar #middle ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+}
+
+.nav-bar #right {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.nav-header.active {
+    position: relative;
+}
+
+.nav-header {
+    position: relative;
+}
+
+.nav-header::after {
+    content: "";
+    width: 0%;
+    height: 0%;
+    transition: width 0.1s linear;
+}
+
+.nav-header:hover::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    background-color: rgb(93, 101, 214);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+}
+
+.nav-header.active::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    background-color: rgb(93, 101, 214);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+}
+
+#user-logo {
+    width: 20px;
+}
+
+/* Header - END */
+
+main {
+    width: 100%;
+    position: absolute;
+    top: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Hero Section - START*/
+
+/* FOOTER- SECTION */
+
+footer {
+    background-color: black;
+    width: 100%;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+}
+
+footer #top {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+#social-links ul {
+    display: flex;
+    gap: 10px;
+    list-style-type: none;
+    justify-content: center;
+}
+
+#social-links .icon-image {
+    width: 25px;
+    height: 25px;
+}
+
+#quick-links ul {
+    margin-left: 12px;
+    list-style-type:circle;
+}
+
+#quick-links ul li a {
+    text-decoration: none;
+    color: #aaa;
+    display: inline-block;
+    margin-top: 3px;
+}
+
+#quick-links ul li a:hover {
+    color: rgb(0, 174, 255);
+    border-bottom: 1px solid rgb(0, 174, 255);
+}
+
+footer #down #full-line {
+    height: 1px;
+    background-color: rgb(230, 226, 226);
+    margin-bottom: 5px;
+}
+
+.line {
+    height: 3px;
+    width: 100%;
+    margin: 5px;
+    margin-left: 0;
+    background-image: linear-gradient(
+        to right,
+        skyblue,
+        navy
+    )
+}

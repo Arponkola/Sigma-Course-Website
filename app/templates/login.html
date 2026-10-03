@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+    <title>Login Page</title>
+</head>
+<body>
+    <form class="form" method="POST">
+        <h1>Login</h1>
+        {% if error %}
+            <p style="
+                color: rgba(255, 0, 0, 0.88);
+                text-align: center;
+                font-weight: 700;
+            ">{{ error }}</p>
+        {% endif %}
+        <div class="form-group">
+            <label for="name">UserEmail/Mobile : </label>
+            <input name="id" id="name" type="text" placeholder="Enter Email or Mobile Number..." required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password : </label>
+            <input name="password" id="password" type="password" placeholder="Enter Password..." required />
+        </div>
+        <div class="form-group">
+            <button id="login-btn">login</button>
+        </div>
+        <div class="form-group">
+            <p>Crate Account ? <a href="{{url_for('auth.register')}}">Click Here</a></p>
+        </div>
+    </form>
+</body>
+</html>

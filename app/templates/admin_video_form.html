@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if video %}
+        Edit Video
+    {% else %}
+        Upload Video
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block middle %}
+
+<ul>
+
+    <li class="nav-header">
+        <a href="{{ url_for('home.index') }}">
+            Home
+        </a>
+    </li>
+
+    {% if is_admin %}
+
+    <li class="nav-header active">
+        <a href="{{ url_for('admin.admin_page') }}">
+            Admin
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.course_page') }}">
+            Courses
+        </a>
+    </li>
+
+    {% if user %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.own_page') }}">
+            My Courses
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('about.about_page') }}">
+            About Us
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <!-- Page Header -->
+    <div class="page-heading">
+
+        <div>
+
+            <h1>
+                {% if video %}
+                    Edit Video
+                {% else %}
+                    Upload Video
+                {% endif %}
+            </h1>
+
+            <p>
+                {% if video %}
+                    Update video information or replace the video file.
+                {% else %}
+                    Upload a video file for your course.
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin.videos') }}"
+            class="back-button"
+        >
+            Back to Videos
+        </a>
+
+    </div>
+
+
+    <!-- Form -->
+    <section class="form-section">
+
+        <form
+            class="admin-form"
+            method="POST"
+            action="{{ form_action }}"
+            enctype="multipart/form-data"
+        >
+
+            <!-- Course -->
+            <div class="form-group">
+
+                <label for="course_id">
+                    Course
+                </label>
+
+                <select
+                    id="course_id"
+                    name="course_id"
+                    required
+                >
+
+                    <option value="">
+                        -- Select Course --
+                    </option>
+
+                    {% for course in courses %}
+
+                    <option
+                        value="{{ course.id }}"
+                        {% if video and video.course_id == course.id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ course.course_name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Video Title -->
+            <div class="form-group">
+
+                <label for="title">
+                    Video Title
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ video.title if video else '' }}"
+                    placeholder="Enter video title"
+                >
+
+            </div>
+
+
+            <!-- Description -->
+            <div class="form-group">
+
+                <label for="desc">
+                    Description
+                </label>
+
+                <textarea
+                    id="desc"
+                    name="desc"
+                    rows="5"
+                    placeholder="Enter video description"
+                >{{ video.desc if video else '' }}</textarea>
+
+            </div>
+
+
+            <!-- Video File -->
+            <div class="form-group">
+
+                <label for="video">
+
+                    {% if video %}
+                        Replace Video
+                    {% else %}
+                        Video File
+                    {% endif %}
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="video"
+                    name="video"
+                    class="video-file-input"
+                    accept="video/*"
+                    {% if not video %}
+                        required
+                    {% endif %}
+                >
+
+
+                <div class="video-upload-info">
+
+                    <strong>Supported formats:</strong>
+                    MP4, WebM, OGG, MOV, AVI and MKV.
+
+                    <br>
+
+                    The uploaded video will be stored in
+                    <strong>static/videos/</strong>.
+
+                </div>
+
+            </div>
+
+
+            <!-- Current Video -->
+            {% if video and video.url %}
+
+            <div class="form-group">
+
+                <label>
+                    Current Video
+                </label>
+
+
+                <div class="current-video">
+
+                    <span>
+                        CURRENT VIDEO
+                    </span>
+
+
+                    <video
+                        controls
+                        preload="metadata"
+                    >
+
+                        <source src="{{ video.url }}">
+
+                        Your browser does not support
+                        video playback.
+
+                    </video>
+
+                </div>
+
+
+                <small>
+                    Current file:
+                    {{ video.url }}
+                </small>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+
+                <a
+                    href="{{ url_for('admin.videos') }}"
+                    class="back-button"
+                >
+                    Cancel
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+
+                    {% if video %}
+                        Update Video
+                    {% else %}
+                        Upload Video
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</div>
+
+{% endblock %}

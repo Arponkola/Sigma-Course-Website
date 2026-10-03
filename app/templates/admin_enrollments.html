@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block title %}
+Manage Enrollments
+{% endblock %}
+
+{% block middle %}
+
+<ul>
+
+    <li class="nav-header">
+        <a href="{{ url_for('home.index') }}">
+            Home
+        </a>
+    </li>
+
+    {% if is_admin %}
+
+    <li class="nav-header active">
+        <a href="{{ url_for('admin.admin_page') }}">
+            Admin
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.course_page') }}">
+            Courses
+        </a>
+    </li>
+
+    {% if user %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.own_page') }}">
+            My Courses
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('about.about_page') }}">
+            About Us
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <section class="admin-section">
+
+        <div class="section-title">
+
+            <h2>
+                Enrollment Management
+            </h2>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="admin-table-wrapper">
+
+            <table class="admin-table">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Course</th>
+                        <th>Purchased</th>
+                        <th>Accessed</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in enrollments %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.id }}
+                        </td>
+
+                        <td>
+
+                            {% if item.user %}
+                                {{ item.user.username }}
+                            {% else %}
+                                User #{{ item.user_id }}
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if item.course_id in courses %}
+
+                                {{ courses[item.course_id].course_name }}
+
+                            {% else %}
+
+                                Course #{{ item.course_id }}
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'admin.update_enrollment',
+                                    enrollment_id=item.id
+                                ) }}"
+                                class="status-form"
+                            >
+
+                                <label class="checkbox-row">
+
+                                    <input
+                                        type="checkbox"
+                                        name="is_purchased"
+                                        {% if item.is_purchased %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+                                    Purchased
+
+                                </label>
+
+                                <label class="checkbox-row">
+
+                                    <input
+                                        type="checkbox"
+                                        name="is_accessed"
+                                        {% if item.is_accessed %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+                                    Accessed
+
+                                </label>
+
+                                <button
+                                    type="submit"
+                                    class="small-button"
+                                >
+                                    Save
+                                </button>
+
+                            </form>
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.is_accessed %}
+
+                                <span class="status-admin">
+                                    YES
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-user">
+                                    NO
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'admin.delete_enrollment',
+                                    enrollment_id=item.id
+                                ) }}"
+                                onsubmit="return confirm(
+                                    'Delete this enrollment?'
+                                );"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="delete-button"
+                                >
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No enrollments found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin.admin_page') }}"
+            class="back-button"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

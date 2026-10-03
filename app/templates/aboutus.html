@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aboutus.css') }}" />
+{% endblock %}
+
+{% block title %} About Us Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header active"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div id="content">
+        <h1 style="text-align: center;">About Us</h1>
+        <div id="upper">
+            <div id="upper-left">
+                <p>
+                    Hi This Is Me Arpon Kola. A Full Stack Python Developer
+                    Who developed backend using flask and frontend
+                    using HTML, Css And Javascript. This is my 
+                    website where i teach you how to developed a 
+                    website using different languages like Frontend
+                    using HTML, CSS, JS(JavaScript) and React Js and 
+                    backend using python Microframework like(Flask, FastAPI)
+                    and framework like(DJANGO).
+                </p>
+                <p>
+                    And also teach different languages like C, Java, C++
+                    different courses are present so user can access them and it's
+                    completly free no need to give any money or not send any
+                    money if anyone ask.
+                </p>
+            </div>
+            <div id="upper-right">
+                <img src="https://www.w3schools.com/html/pic_trulli.jpg" />
+            </div>
+        </div>
+        <div id="lower">
+            <div id="lower-left">
+                <img src="https://www.w3schools.com/html/pic_trulli.jpg" />
+            </div>
+            <div id="lower-right">
+                <p>Also We Teach diffrent type of Course like (Misic, VideoGraphy, Languages).</p>
+                <p>The Prices of This Courses are likely to be need not paid</p>
+                <p>Price Only Showable it is not need to Pay You Anything.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

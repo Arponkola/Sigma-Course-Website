@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/study_courses.css') }}" />
+{% endblock %}
+
+{% block title %} Course Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header active"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div id="course-contain">
+        <div id="course-contain-left">
+            <h2 style="text-align: center;">Index</h2>
+            {% if firstVideo %}
+                <div class="link-index active" id="video-{{firstVideo.id}}" data-url="{{firstVideo.url}}">{{firstVideo.title}} &RightArrow;</div>
+            {% endif %}
+            {% for video in videos %}
+                <div class="link-index" id="video-{{video.id}}" data-url="{{video.url}}">{{video.title}} &RightArrow;</div>
+            {% endfor %}
+        </div>
+        <div id="course-contain-right">
+            {% if firstVideo %}
+                <video
+                    id="course-contain-right-video"
+                    src={{firstVideo.url}}
+                    controls
+                >
+                </video>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+        const video = document.getElementById("course-contain-right-video");
+        const linked_index = document.getElementsByClassName("link-index");
+
+        const removeFromAllClassList = ()=> {
+            for(let i=0; i<linked_index.length; i++) {
+                linked_index.item(i).classList.remove("active");
+            }
+        }
+
+        for(let i=0; i<linked_index.length; i++) {
+            linked_index.item(i).addEventListener(
+                "click", (e)=>{
+                removeFromAllClassList()
+                e.currentTarget.classList.add("active");
+                video.src = e.currentTarget.getAttribute("data-url")
+                console.log(video);
+            })
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block title %}
+Contact Messages
+{% endblock %}
+
+{% block middle %}
+
+<ul>
+
+    <li class="nav-header">
+        <a href="{{ url_for('home.index') }}">
+            Home
+        </a>
+    </li>
+
+    {% if is_admin %}
+
+    <li class="nav-header active">
+        <a href="{{ url_for('admin.admin_page') }}">
+            Admin
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.course_page') }}">
+            Courses
+        </a>
+    </li>
+
+    {% if user %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.own_page') }}">
+            My Courses
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('about.about_page') }}">
+            About Us
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <section class="admin-section">
+
+        <div class="section-title">
+
+            <h2>
+                Contact Messages
+            </h2>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="admin-table-wrapper">
+
+            <table class="admin-table">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in contacts %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.id }}
+                        </td>
+
+                        <td>
+                            {{ item.name }}
+                        </td>
+
+                        <td>
+                            {{ item.email }}
+                        </td>
+
+                        <td class="message-cell">
+                            {{ item.message }}
+                        </td>
+
+                        <td>
+
+                            {% if item.contact_at %}
+                                {{ item.contact_at.strftime(
+                                    '%d-%m-%Y %H:%M'
+                                ) }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'admin.delete_contact',
+                                    contact_id=item.id
+                                ) }}"
+                                onsubmit="return confirm(
+                                    'Delete this message?'
+                                );"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="delete-button"
+                                >
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No contact messages found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin.admin_page') }}"
+            class="back-button"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </section>
+
+</div>
+{% endblock %}

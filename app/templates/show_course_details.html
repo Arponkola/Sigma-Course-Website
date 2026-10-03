@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course.css') }}" />
+{% endblock %}
+
+{% block title %} Course Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header active"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}

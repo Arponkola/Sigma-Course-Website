@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block title %}
+Manage Users
+{% endblock %}
+
+{% block middle %}
+
+<ul>
+
+    <li class="nav-header">
+        <a href="{{ url_for('home.index') }}">
+            Home
+        </a>
+    </li>
+
+    {% if is_admin %}
+
+    <li class="nav-header active">
+        <a href="{{ url_for('admin.admin_page') }}">
+            Admin
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.course_page') }}">
+            Courses
+        </a>
+    </li>
+
+    {% if user %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.own_page') }}">
+            My Courses
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('about.about_page') }}">
+            About Us
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <section class="admin-section">
+
+        <div class="page-heading">
+
+            <div>
+                <span class="admin-label">
+                    ADMIN
+                </span>
+
+                <h1>
+                    User Management
+                </h1>
+
+                <p>
+                    Manage registered users and administrators.
+                </p>
+            </div>
+
+            <a
+                href="{{ url_for('admin.create_user') }}"
+                class="primary-button"
+            >
+                + Create User
+            </a>
+
+        </div>
+
+
+        <div class="admin-table-wrapper">
+
+            <table class="admin-table">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Admin</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in users %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.id }}
+                        </td>
+
+                        <td>
+                            {{ item.username }}
+                        </td>
+
+                        <td>
+                            {{ item.email }}
+                        </td>
+
+                        <td>
+                            {{ item.mobile }}
+                        </td>
+
+                        <td>
+
+                            {% if item.is_admin %}
+                                <span class="status-admin">
+                                    ADMIN
+                                </span>
+                            {% else %}
+                                <span class="status-user">
+                                    USER
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <div class="table-actions">
+
+                                <a
+                                    href="{{ url_for(
+                                        'admin.edit_user',
+                                        user_id=item.id
+                                    ) }}"
+                                    class="edit-button"
+                                >
+                                    Edit
+                                </a>
+
+
+                                {% if item.id != session.get('user_id') %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.toggle_admin',
+                                        user_id=item.id
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="small-button"
+                                    >
+                                        {% if item.is_admin %}
+                                            Remove Admin
+                                        {% else %}
+                                            Make Admin
+                                        {% endif %}
+                                    </button>
+
+                                </form>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.delete_user',
+                                        user_id=item.id
+                                    ) }}"
+                                    onsubmit="return confirm(
+                                        'Delete this user?'
+                                    );"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="delete-button"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                                {% endif %}
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No users found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin.admin_page') }}"
+            class="back-button"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

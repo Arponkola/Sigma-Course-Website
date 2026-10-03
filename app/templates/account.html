@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/account.css') }}" />
+{% endblock %}
+
+{% block title %} Course Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header active"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="account-container">
+        <section class="account-card">
+            <div class="account-header">
+                <h1>My Account</h1>
+                <p>View your account information.</p>
+            </div>
+        <div class="account-details">
+            <div class="account-row">
+                <span class="account-label">Username</span>
+                <span class="account-value">{{ user_record.username }}</span>
+            </div>
+
+            <div class="account-row">
+                <span class="account-label">Email</span>
+                <span class="account-value">{{ user_record.email }}</span>
+            </div>
+
+            <div class="account-row">
+                <span class="account-label">Mobile</span>
+                <span class="account-value">{{ user_record.mobile }}</span>
+            </div>
+
+
+            <div class="account-row">
+                <span class="account-label">Account Type</span>
+                    <span class="account-value">
+                        {% if user_record.is_admin %}
+                            <span class="account-badge admin">Administrator</span>
+                        {% else %}
+                            <span class="account-badge">User</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

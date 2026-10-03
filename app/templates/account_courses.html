@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mycourses.css') }}" />
+{% endblock %}
+
+{% block title %} Course Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header active"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div id="container">
+        <div class="search-container">
+            <input id="query" placeholder="Search Course By Name...." />
+            <button onclick="handleSearch(event)">search</button>
+        </div>
+        <div id="result">
+            {% for course in courses %}
+                <div class="result-container" id="{{course.id}}-{{course.id}}">
+                    <div class="result-container-image"
+                        style="background-image: url({{course.thumbnail}});
+                    ">
+                    </div>
+                    <div class="result-info">
+                        <p>{{ course.course_name }}</p>
+                        <a href={{ url_for('study.index', course_id=course.id) }} class="button">Continue</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+        const searchQuery = document.getElementById("query");
+        const BASE_URL = "/course/own/search/";
+        const result = document.getElementById("result");
+        const handleSearch = (e)=> {
+            const query = searchQuery.value.trim();
+            if(!query) {
+                return;
+            }
+            fetch(BASE_URL+query)
+            .then(res=>res.json())
+            .then((data)=>{
+                if(data.message === "success") {
+                    const courses = data.courses;
+                    result.innerHTML = ''
+                    courses.forEach((course)=>{
+                        result.innerHTML += `
+                            <div class="result-container" id="${course.id}-${course.id}">
+                                <div class="result-container-image"
+                                    style="background-image: url(${course.thumbnail});
+                                ">
+                                </div>
+                                <div class="result-info">
+                                    <p>${ course.course_name }</p>
+                                    <a href={{ url_for('study.index') }}?course_id=${course.id} class="button">Continue</a>
+                                </div>
+                            </div>
+                        `
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.error(err);
+            })
+        };
+    </script>
+{% endblock %}

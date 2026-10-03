@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Manage Videos
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block middle %}
+
+<ul>
+
+    <li class="nav-header">
+        <a href="{{ url_for('home.index') }}">
+            Home
+        </a>
+    </li>
+
+    {% if is_admin %}
+
+    <li class="nav-header active">
+        <a href="{{ url_for('admin.admin_page') }}">
+            Admin
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.course_page') }}">
+            Courses
+        </a>
+    </li>
+
+    {% if user %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('course.own_page') }}">
+            My Courses
+        </a>
+    </li>
+
+    {% endif %}
+
+    <li class="nav-header">
+        <a href="{{ url_for('about.about_page') }}">
+            About Us
+        </a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <!-- Page Header -->
+    <div class="page-heading">
+
+        <div>
+            <h1>Manage Videos</h1>
+
+            <p>
+                Upload, edit and manage course videos.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('admin.create_video') }}"
+            class="primary-button"
+        >
+            + Upload Video
+        </a>
+
+    </div>
+
+
+    <!-- Video Table -->
+    <section class="admin-section">
+
+        {% if videos %}
+
+        <div class="admin-table-wrapper">
+
+            <table class="admin-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Video</th>
+                        <th>Course</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Stored URL</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for video in videos %}
+
+                    <tr>
+
+                        <!-- ID -->
+                        <td>
+                            {{ video.id }}
+                        </td>
+
+
+                        <!-- Video Preview -->
+                        <td>
+
+                            <video
+                                class="video-preview"
+                                controls
+                                preload="metadata"
+                            >
+
+                                <source src="{{ video.url }}">
+
+                                Your browser does not support
+                                video playback.
+
+                            </video>
+
+                        </td>
+
+
+                        <!-- Course -->
+                        <td>
+
+                            {% set course = course_map.get(video.course_id) %}
+
+                            {% if course %}
+
+                                <span class="video-course">
+                                    {{ course.course_name }}
+                                </span>
+
+                            {% else %}
+
+                                <span class="admin-status status-user">
+                                    Course Deleted
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Title -->
+                        <td>
+
+                            {% if video.title %}
+
+                                <div class="video-title">
+                                    {{ video.title }}
+                                </div>
+
+                            {% else %}
+
+                                <span class="admin-status status-user">
+                                    No title
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Description -->
+                        <td class="message-cell">
+
+                            {% if video.desc %}
+
+                                <div class="video-description">
+                                    {{ video.desc }}
+                                </div>
+
+                            {% else %}
+
+                                <span class="admin-status status-user">
+                                    No description
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Stored URL -->
+                        <td>
+
+                            {% if video.url %}
+
+                                <div class="video-url">
+
+                                    <a
+                                        href="{{ video.url }}"
+                                        target="_blank"
+                                    >
+                                        {{ video.url }}
+                                    </a>
+
+                                </div>
+
+                            {% else %}
+
+                                <span class="admin-status status-user">
+                                    No video
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Actions -->
+                        <td>
+
+                            <div class="table-actions">
+
+                                <a
+                                    href="{{ url_for(
+                                        'admin.edit_video',
+                                        video_id=video.id
+                                    ) }}"
+                                    class="edit-button"
+                                >
+                                    Edit
+                                </a>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.delete_video',
+                                        video_id=video.id
+                                    ) }}"
+                                    onsubmit="
+                                        return confirm(
+                                            'Are you sure you want to delete this video?'
+                                        );
+                                    "
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="delete-button"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <!-- Empty State -->
+
+        <div class="relationship-box">
+
+            <h2>No Videos Found</h2>
+
+            <p>
+                There are currently no videos in the database.
+            </p>
+
+            <br>
+
+            <a
+                href="{{ url_for('admin.create_video') }}"
+                class="primary-button"
+            >
+                Upload Your First Video
+            </a>
+
+        </div>
+
+        {% endif %}
+
+        <a
+            href="{{ url_for('admin.admin_page') }}"
+            class="back-button"
+        >
+            ← Back to Dashboard
+        </a>
+    </section>
+
+</div>
+
+{% endblock %}

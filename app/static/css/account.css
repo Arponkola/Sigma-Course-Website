@@ -1,0 +1,198 @@
+/* =========================================================
+   ACCOUNT PAGE
+========================================================= */
+
+.account-container {
+    width: min(1000px, 94%);
+
+    margin: 40px auto 60px;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+
+/* =========================================================
+   ACCOUNT CARD
+========================================================= */
+
+.account-card {
+    width: 100%;
+
+    max-width: 750px;
+
+    background-color: #fff;
+
+    border: 1px solid #ddd;
+
+    border-radius: 12px;
+
+    padding: 35px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   ACCOUNT HEADER
+========================================================= */
+
+.account-header {
+    margin-bottom: 30px;
+
+    border-bottom: 1px solid #ddd;
+
+    padding-bottom: 20px;
+}
+
+.account-header h1 {
+    margin: 0 0 8px;
+
+    font-size: 30px;
+
+    color: #111;
+}
+
+.account-header p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   ACCOUNT DETAILS
+========================================================= */
+
+.account-details {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0;
+}
+
+
+/* =========================================================
+   ACCOUNT ROW
+========================================================= */
+
+.account-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 18px 5px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.account-row:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   ACCOUNT LABEL
+========================================================= */
+
+.account-label {
+    color: #666;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    min-width: 120px;
+}
+
+
+/* =========================================================
+   ACCOUNT VALUE
+========================================================= */
+
+.account-value {
+    color: #222;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ACCOUNT BADGE
+========================================================= */
+
+.account-badge {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background-color: #eee;
+
+    color: #555;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.account-badge.admin {
+    background-color: #e0e3ff;
+
+    color: #303b9b;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .account-container {
+        width: 94%;
+
+        margin-top: 25px;
+    }
+
+    .account-card {
+        padding: 25px 20px;
+    }
+
+    .account-header h1 {
+        font-size: 26px;
+    }
+
+    .account-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 7px;
+
+        padding: 16px 0;
+    }
+
+    .account-label {
+        min-width: auto;
+    }
+
+    .account-value {
+        text-align: left;
+    }
+}

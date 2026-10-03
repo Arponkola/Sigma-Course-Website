@@ -1,0 +1,91 @@
+#container-body {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#container-body .form {
+    background-color: white;
+    box-shadow: 1px 1px 3px 3px rgba(155, 155, 155, 0.55);
+    width: 50%;
+    min-width: 450px;
+    max-width: 700px;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+#container-body .form #left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    gap: 7px;
+}
+
+#container-body .form #left .form-group {
+    width: 90%;
+}
+
+#container-body .form #left .form-group input, textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(93, 101, 214, 0.55);
+}
+
+#container-body .form #left .form-group label {
+    color: rgba(93, 101, 214, 1);
+}
+
+#container-body .form #left .form-group input:focus, textarea:focus {
+    border: none;
+    outline: 2px solid rgba(93, 101, 214, 1);
+}
+
+#container-body .form #left .form-group textarea {
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+#container-body .form #left .form-group button {
+    width: 100%;
+    padding: 7px;
+    border-radius: 7px;
+    border: 1px solid rgba(211, 208, 208, 1);
+    background-color:rgb(93, 101, 214);
+    color: white;
+}
+
+#container-body .form #left .form-group button:hover {
+    outline: 2px solid rgba(95, 94, 94, 0.55);
+    cursor: pointer;
+}
+
+#container-body .form #right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#container-body .form #right .form-group {
+    width: 90%;
+}
+
+#container-body .form #right .form-group a {
+    text-decoration: none;
+    color: rgba(93, 101, 214, 1);
+}
+
+#container-body .form #right .form-group a:hover {
+    color: rgb(23, 29, 109);
+}

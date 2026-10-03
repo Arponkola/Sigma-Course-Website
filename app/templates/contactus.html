@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contactus.css') }}" />
+{% endblock %}
+
+{% block title %} About Us Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div id="container-body">
+        <p style="
+            text-align: center;
+            font-size: xx-large;
+            font-weight: 700;
+        ">Contact Us</p>
+        <form method="POST" class="form" onsubmit="handleContactUs(event)">
+            <section id="left">
+                <div class="form-group">
+                    <label for="name">Name : </label>
+                    <input id="name" type="text" name="name" placeholder="Enter Name...." />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email/Mobile : </label>
+                    <input id="email" type="email" name="email-or-mobile" placeholder="Enter Email or Mobile...." />
+                </div>
+                <div class="form-group"> 
+                    <label for="message">Message : </label> 
+                    <textarea id="message" placeholder="Type Your Message here....."></textarea> 
+                </div>
+                <div class="form-group">
+                    <button id="submit-btn">Submit</button>
+                </div>
+            </section>
+            <section id="right">
+                <div class="form-group">
+                    <label for="owner-mobile">Mobile : </label>
+                    <a id="owner-mobile" href="tel:+9193301574545">+91-9330157545</a>
+                </div>
+                <div class="form-group">
+                    <label for="owner-email">Email : </label>
+                    <a href="mailto:arponkola326@gmail.com">arponkola326@gmail.com</a>
+                </div>
+                <div class="form-group" style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid rgba(93, 101, 214, 0.55);
+                    padding: 10px;
+                    border-radius: 15px;
+                ">
+                    <img
+                        src="{{ url_for('static', filename='images/user.png') }}" 
+                        alt="Logo"
+                        width="80%"
+                    />
+                </div>
+            </section>
+        </form>
+    </div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/contactus.js') }}"></script>
+{% endblock %}

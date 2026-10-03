@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course.css') }}" />
+{% endblock %}
+
+{% block title %} Course Page {% endblock %}
+
+{% block middle %}
+    <ul>
+        <li class="nav-header"><a href="{{ url_for('home.index') }}">Home</a></li>
+        {% if is_admin %}
+            <li class="nav-header"><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
+        {% endif %}
+        <li class="nav-header active"><a href="{{ url_for('course.course_page') }}">Courses</a></li>
+        {% if user %}
+            <li class="nav-header"><a href="{{ url_for('course.own_page') }}">My Courses</a></li>
+        {% endif %}
+        <li class="nav-header"><a href="{{ url_for('about.about_page') }}">About Us</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div id="container">
+        <div class="search-container">
+            <input
+                type="search"
+                name="query"
+                id="search-query"
+                placeholder="Search By Course Name....."
+            />
+            <button onclick="handleCourseSearch(event)">Search</button>
+        </div>
+        <div class="result-bottom">
+            <div id="filter-by">
+                <h2>Filter By</h2>
+                <br />
+                <h4>Course</h4>
+                <div class="filter-group">
+                    <input class="courseName" type="radio" name="courseName" value="all"
+                        onclick="handleCourseChange(event)" checked
+                    />
+                    <label>all</label>
+                </div>
+                <div class="filter-group">
+                    <input class="courseName" type="radio" name="courseName" value="programming"
+                        onclick="handleCourseChange(event)"
+                    />
+                    <label>Programming</label>
+                </div>
+                <div class="filter-group">
+                    <input class="courseName" type="radio" name="courseName" value="music"
+                        onclick="handleCourseChange(event)"
+                    />
+                    <label>Musics</label>
+                </div>
+                <div class="filter-group">
+                    <input class="courseName" type="radio" name="courseName" value="videography"
+                        onclick="handleCourseChange(event)"
+                    />
+                    <label>Video Graphy</label>
+                </div>
+                <div class="filter-group">
+                    <input class="courseName" type="radio" name="courseName" value="language"
+                        onclick="handleCourseChange(event)"
+                    />
+                    <label>Languages</label>
+                </div>
+                <br/>
+                <h4>Price</h4>
+                <div class="filter-group">
+                    <label for="price"><small>100</small></label>
+                    <input 
+                        id="price"
+                        name="price"
+                        type="range" name="courseName"
+                        value="300"
+                        min="100"
+                        max="1000"
+                        onchange="showPriceValue()"
+                    />
+                    <label for="price"><small>1000</small></label>
+                </div>
+                <div class="filter-group">
+                    <input 
+                        id="priceshow"
+                        value="Price : ₹300"
+                        style="padding: 5px;"
+                        disabled
+                    />
+                </div>
+                <br/>
+                <h4>Duration</h4>
+                <div class="filter-group">
+                    <input type="radio" name="courseDuration" value="3" />
+                    <label>3 month</label>
+                </div>
+                <div class="filter-group">
+                    <input type="radio" name="courseDuration" value="6" />
+                    <label>6 month</label>
+                </div>
+                <div class="filter-group">
+                    <input type="radio" name="courseDuration" value="8" />
+                    <label>8 month</label>
+                </div>
+            </div>
+            <div id="result">
+                {% for course in courses %}
+                    <div class="result-container" id="{{course.id}}-{{course.id}}">
+                        <div class="result-container-image"
+                            style="background-image: url({{course.thumbnail}});
+                        ">
+                        </div>
+                        <div class="result-info">
+                            <h4>{{ course.course_name }}</h4>
+                            <button onclick="showForm(event)" id="{{course.id}}">Apply</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="modal-form" class="modal-form">
+                <div class="modal-form-group">
+                    <h3 style="color: white;">Certificate Form</h3>
+                </div>
+                <div class="modal-form-group" style="width: 90%;">
+                    <p style="color:#eee;">This Name Is Appear On Your Certificate, So enter this name carefully & it can't change later</p>
+                </div>
+                <div class="modal-form-group">
+                    <input name="name" id="name" placeholder="Enter Name...."/>
+                </div>
+                <div class="modal-form-group-button">
+                    <button onclick="applyForCourse(event)">Submit</button>
+                </div>
+                <button id="close-btn" onclick="closeBtn()">&times;</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/course.js') }}">
+    </script>
+{% endblock %}
