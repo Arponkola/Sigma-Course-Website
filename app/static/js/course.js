@@ -4,7 +4,7 @@ const courses = document.getElementsByClassName('courseName');
 const containers = document.getElementsByClassName('result-container');
 const modalForm = document.getElementById("modal-form");
 const result = document.getElementById("result");
-const BASE_URL = "http://127.0.0.1:5000/course/";
+const BASE_URL = "/course/";
 
 function showPriceValue() {
     priceshow.value = "Price : ₹" + price.value
